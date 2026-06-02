@@ -1,0 +1,20 @@
+const placeHolders = [
+  "Get stuff done 💪",
+  "Break it down into steps 📝",
+  "What's your next move? 🎯",
+  "Capture that idea ✨",
+  "Don't forget this one 🔔",
+  "Make it happen 🚀",
+  "One step at a time 👣",
+  "What needs your attention? 👀",
+  "Future you will thank you 🙏",
+  "Add it before you forget 🧠",
+  "Let's build momentum 📈",
+  "What's the priority? 🎪",
+  "Keep the ball rolling ⚽",
+  "Write it down now 📌",
+  "Stay on top of it 📊",
+  "What's calling you? 📞",
+  "Add your masterpiece 🎨",
+];
+export default placeHolders
