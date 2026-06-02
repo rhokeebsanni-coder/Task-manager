@@ -7,7 +7,7 @@ const connectDB = require("./db/connect.js");
 const cors = require("cors")
 const notFound = require("./middleware/notFound.js")
 const errorHandlerMiddleware = require("./middleware/error-handler.js")
-const port = process.env.PORT || 5000
+const port = 5000
 
 app.use(cors())
 app.use(express.json())

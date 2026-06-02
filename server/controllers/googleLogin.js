@@ -9,7 +9,7 @@ const googleLogin = async (req, res) => {
   const { credential } = req.body;
 
   if (!credential) {
-    return res.status(400).json({ message: "No credential provided" });
+    return res.status(400).json({ msg: "No credential provided" });
   }
 
   try {
@@ -38,7 +38,6 @@ const googleLogin = async (req, res) => {
         user.googleId = sub;
         if (!user.image) user.image = picture;
         await user.save();
-        
       } else {
         user = await User.create({
           username: name,
@@ -46,7 +45,6 @@ const googleLogin = async (req, res) => {
           googleId: sub,
           image: picture,
         });
-        
       }
     }
 
@@ -65,9 +63,9 @@ const googleLogin = async (req, res) => {
       },
     });
   } catch (error) {
-
+    console.log("❌ FAILED - Token verification failed:", error.message);
     res.status(401).json({
-      message: "Invalid or expired Google token",
+      msg: "Invalid or expired Google token",
     });
   }
 };
