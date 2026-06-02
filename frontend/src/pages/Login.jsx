@@ -122,31 +122,41 @@ const Login = () => {
         <div className="login-divider">
           <span>or</span>
         </div>
-        <GoogleLogin
-          onSuccess={async (credentialResponse) => {
-            try {
-              const response = await API.post("/auth/googleLogin", {
-                credential: credentialResponse.credential,
-              });
-              const token = response.data.token;
-              localStorage.setItem("token", token);
-              navigate("/home", { replace: true });
-            } catch (error) {
-              setError(
-                error.response?.data?.msg || "Google login failed. Try again.",
-              );
-            }
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+            marginTop: "1rem",
           }}
-          onError={() => {
-            setError("Google login failed.");
-          }}
-          theme="outline"
-          shape="pill" // ⚡ Makes the button fully rounded
-          size="large" // ⚡ Makes the button larger vertically
-          width="320px" // ⚡ Sets a concrete, larger width (match this to your main button width)
         >
-          Sign in with Google
-        </GoogleLogin>
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const response = await API.post("/auth/googleLogin", {
+                  credential: credentialResponse.credential,
+                });
+                const token = response.data.token;
+                localStorage.setItem("token", token);
+                navigate("/home", { replace: true });
+              } catch (error) {
+                setError(
+                  error.response?.data?.msg ||
+                    "Google login failed. Try again.",
+                );
+              }
+            }}
+            onError={() => {
+              setError("Google login failed.");
+            }}
+            theme="outline"
+            shape="pill" // ⚡ Makes the button fully rounded
+            size="large" // ⚡ Makes the button larger vertically
+            width="320px" // ⚡ Sets a concrete, larger width (match this to your main button width)
+          >
+            Sign in with Google
+          </GoogleLogin>
+        </div>
       </div>
     </div>
   );
