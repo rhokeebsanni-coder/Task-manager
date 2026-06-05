@@ -24,12 +24,6 @@ Capture the following screens:
 
 ![Register](screenshots/register.png)
 
-**Tips:**
-
-* Keep forms centered and uncluttered
-* Ensure Google OAuth button is fully visible
-* Use realistic sample email addresses
-* Capture pages in their default state
 
 ---
 
@@ -45,14 +39,7 @@ Capture the main task management workspace showing:
 
 ![Dashboard](screenshots/home.png)
 
-**Tips:**
-
-* Populate with realistic tasks before taking screenshots
-* Include both completed and pending tasks
-* Capture the full workspace layout
-* Avoid empty-state screenshots
-
----
+a---
 
 ## ✨ Features
 
