@@ -1327,3 +1327,283 @@ body {
   font-weight: 400;
   letter-spacing: 0.2px;
 }
+
+
+/* ssettings */
+.settings-wrapper {
+  min-height: 100vh;
+  background: var(--cream);
+  padding: 2rem;
+}
+
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.settings-back-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  background: var(--roast);
+  color: var(--foam);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.settings-back-btn:hover {
+  background: var(--espresso);
+  transform: scale(1.05);
+}
+
+.settings-title {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--espresso);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* ── Main card ── */
+.settings-card {
+  background: #fff;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(28,16,8,0.07);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Sections inside card ── */
+.settings-section {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(28,16,8,0.07);
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  background: var(--foam);
+}
+
+.settings-section-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--caramel);
+  margin: 0 0 1.2rem 0;
+}
+
+/* ── Profile row ── */
+.settings-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.settings-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--latte);
+  flex-shrink: 0;
+}
+
+.settings-profile-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin: 0 0 3px 0;
+}
+
+.settings-profile-email {
+  font-size: 0.85rem;
+  color: var(--clay);
+  margin: 0;
+}
+
+/* ── Toggle row ── */
+.settings-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0;
+}
+
+.settings-toggle-row + .settings-toggle-row {
+  border-top: 1px solid rgba(28,16,8,0.05);
+}
+
+.settings-toggle-label {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin: 0 0 2px 0;
+}
+
+.settings-toggle-desc {
+  font-size: 0.8rem;
+  color: var(--clay);
+  margin: 0;
+}
+
+/* ── Toggle switch ── */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  background: rgba(28,16,8,0.12);
+  transition: background 0.25s;
+}
+
+.toggle-switch input:checked + .toggle-track {
+  background: var(--roast);
+}
+
+.toggle-thumb {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 3px;
+  left: 3px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: left 0.25s;
+}
+
+.toggle-switch input:checked ~ .toggle-track .toggle-thumb {
+  left: 23px;
+}
+
+/* ── Version row ── */
+.settings-version-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0;
+  border-top: 1px solid rgba(28,16,8,0.05);
+}
+
+.settings-version-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--clay);
+  background: var(--cream);
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(28,16,8,0.08);
+}
+
+/* ── Logout section ── */
+.settings-logout-section {
+  padding: 1.5rem;
+  background: var(--foam);
+}
+
+.settings-logout-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--roast);
+  color: var(--foam);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.settings-logout-btn:hover  { background: var(--espresso); }
+.settings-logout-btn:active { transform: scale(0.98); }
+
+/* ── Confirm dialog ── */
+.settings-confirm-box {
+  background: var(--cream);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(28,16,8,0.08);
+  padding: 1.2rem;
+}
+
+.settings-confirm-text {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--espresso);
+  margin: 0 0 1rem 0;
+}
+
+.settings-confirm-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.settings-confirm-btns button {
+  flex: 1;
+  padding: 11px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.settings-confirm-btns button:active { transform: scale(0.97); }
+
+.btn-confirm-logout  { background: var(--priority-high); color: #fff; }
+.btn-confirm-cancel  { background: var(--cream); color: var(--espresso); border: 1px solid rgba(28,16,8,0.1) !important; }
+
+.btn-confirm-logout:hover { opacity: 0.88; }
+.btn-confirm-cancel:hover { background: var(--latte); }
+
+/* ── Info footer ── */
+.settings-info-footer {
+  text-align: center;
+  padding: 1rem;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(28,16,8,0.07);
+  font-size: 0.82rem;
+  color: var(--clay);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .settings-wrapper   { padding: 1rem; }
+  .settings-title     { font-size: 1.5rem; }
+  .settings-card      { border-radius: var(--radius-lg); }
+}

@@ -17,7 +17,6 @@ const googleLogin = async (req, res) => {
 
     const ticket = await client.verifyIdToken({
       idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID,
     });
 
     console.log("✅ SUCCESS - Token verified!");
