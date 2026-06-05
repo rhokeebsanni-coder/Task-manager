@@ -132,11 +132,11 @@ const Login = () => {
         >
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
+              
               try {
                 const response = await API.post("/auth/googleLogin", {
                   credential: credentialResponse.credential,
                 });
-                console.log("FULL GOOGLE RESPONSE:", credentialResponse);
                 const token = response.data.token;
                 localStorage.setItem("token", token);
                 navigate("/home", { replace: true });

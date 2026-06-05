@@ -1607,3 +1607,112 @@ body {
   .settings-title     { font-size: 1.5rem; }
   .settings-card      { border-radius: var(--radius-lg); }
 }
+
+/* ── Features Showcase Section ── */
+.features-showcase {
+  margin-top: 120px;
+  position: relative;
+  z-index: 10;
+}
+
+.section-header-center {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.showcase-title {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--espresso);
+  margin-bottom: 10px;
+}
+
+.showcase-subtitle {
+  color: var(--clay);
+  font-size: 1rem;
+  font-weight: 300;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.interactive-widget {
+  max-width: 650px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: var(--radius-xl);
+  padding: 12px;
+  box-shadow: var(--shadow-lift);
+  border: 1px solid rgba(28,16,8,0.07);
+}
+
+.widget-tabs {
+  display: flex;
+  gap: 8px;
+  background: var(--foam);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.8px;
+  color: var(--clay);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  background: rgba(28,16,8,0.04);
+}
+
+.tab-btn.active {
+  background: #fff;
+  color: var(--roast);
+  box-shadow: var(--shadow-card);
+}
+
+.widget-display-card {
+  padding: 24px 28px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.widget-display-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--espresso);
+  margin: 0 0 10px 0;
+}
+
+.widget-display-card p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--clay);
+  margin: 0 0 20px 0;
+  font-weight: 300;
+}
+
+.widget-footer-metric {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--roast);
+}
+
+.metric-label {
+  color: var(--caramel);
+  font-weight: 400;
+}
