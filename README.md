@@ -1,220 +1,219 @@
 # Task Manager
 
-A full-stack web application for managing daily tasks and workspace productivity. Built with React, Express, and MongoDB, featuring Google OAuth authentication for seamless login.
+A full-stack task management application designed to help users organize daily activities, improve productivity, and manage workloads efficiently. The platform provides secure authentication, seamless Google Sign-In, and a clean interface for creating and managing tasks.
 
-## Features
+## 🚀 Live Demo
 
-- **User Authentication**: Traditional email/password login and Google OAuth sign-in
-- **Task Management**: Create, read, update, and delete tasks
-- **Responsive UI**: Modern, intuitive interface for managing daily workload
-- **Secure**: JWT token-based authentication and authorization
-- **Google OAuth Integration**: Quick and secure sign-in with Google accounts
+**Live Application:** https://your-live-demo-url.com
 
-## Tech Stack
+---
 
-### Frontend
-
-- **React 19** - UI framework
-- **Vite** - Build tool and dev server
-- **React Router DOM** - Client-side routing
-- **Axios** - HTTP client with interceptors for auth
-- **@react-oauth/google** - Google OAuth integration
-
-### Backend
-
-- **Node.js + Express 5** - Server framework
-- **MongoDB + Mongoose** - Database and ODM
-- **JWT** - Token-based authentication
-- **bcrypt** - Password hashing
-- **google-auth-library** - Google token verification
-- **CORS** - Cross-origin resource sharing
-
-## Project Structure
-
-```
-Task manager/
-├── frontend/          # React application
-│   ├── src/
-│   │   ├── components/    # Reusable UI components
-│   │   ├── pages/         # Page components (Login, Home, etc.)
-│   │   ├── api/           # Axios configuration and API calls
-│   │   └── App.jsx        # Main app with routing
-│   └── package.json
-│
-└── server/            # Express backend
-    ├── controllers/   # Route handlers
-    ├── models/        # MongoDB schemas
-    ├── routes/        # API endpoints
-    ├── middleware/    # Custom middleware
-    ├── db/            # Database connection
-    ├── errors/        # Error handling
-    └── app.js         # Server entry point
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v14+)
-- MongoDB instance (local or Atlas)
-- Google OAuth credentials (from Google Cloud Console)
-
-### Environment Setup
-
-#### Backend (.env)
-
-Create a `.env` file in the `server` directory:
-
-```
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/task-manager
-JWT_SECRET=your_jwt_secret_key_here
-GOOGLE_CLIENT_ID=your_google_client_id_here
-```
-
-#### Frontend (.env)
-
-Create a `.env` file in the `frontend` directory (if needed for build configs):
-
-```
-VITE_API_URL=http://localhost:5000
-```
-
-### Installation
-
-1. **Clone the repository** (if applicable)
-2. **Install backend dependencies**:
-
-   ```bash
-   cd server
-   npm install
-   ```
-
-3. **Install frontend dependencies**:
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-### Running the Application
-
-#### Development Mode
-
-**Terminal 1 - Start the backend server:**
-
-```bash
-cd server
-npm run dev
-```
-
-Server runs on `http://localhost:5000`
-
-**Terminal 2 - Start the frontend dev server:**
-
-```bash
-cd frontend
-npm run dev
-```
-
-Frontend runs on `http://localhost:5173` (or as shown in terminal)
-
-#### Production Mode
-
-**Build frontend:**
-
-```bash
-cd frontend
-npm run build
-```
-
-**Start backend:**
-
-```bash
-cd server
-npm start
-```
-
-## API Endpoints
+## 📸 Screenshots
 
 ### Authentication
 
-- `POST /auth/login` - Login with email and password
-- `POST /auth/register` - Register a new account
-- `POST /auth/googleLogin` - Authenticate with Google OAuth token
+Capture the following screens:
 
-### Tasks
+* Login page with email/password fields
+* Google Sign-In button
+* Registration page
+* Responsive mobile layout
+* Clean authentication flow without validation errors
 
-- `GET /tasks` - Fetch all tasks for authenticated user
-- `POST /tasks` - Create a new task
-- `PUT /tasks/:id` - Update a task
-- `DELETE /tasks/:id` - Delete a task
+![Login](screenshots/login.png)
 
-## Authentication Flow
+![Register](screenshots/register.png)
 
-1. **Traditional Login**: User enters email/password → Backend validates → JWT token issued
-2. **Google OAuth**:
-   - User clicks "Sign in with Google"
-   - Google returns credential token to frontend
-   - Frontend sends token to `/auth/googleLogin`
-   - Backend verifies token and creates/updates user
-   - JWT token issued for future requests
+**Tips:**
 
-## Key Features Explained
+* Keep forms centered and uncluttered
+* Ensure Google OAuth button is fully visible
+* Use realistic sample email addresses
+* Capture pages in their default state
 
-### Token Management
+---
 
-- Tokens are stored in localStorage
-- Axios interceptor automatically includes token in all authenticated requests
-- 401 responses clear the token and redirect to login
+### Dashboard
+
+Capture the main task management workspace showing:
+
+* Task list with multiple tasks
+* Create Task form/modal
+* Completed and pending tasks
+* Edit/Delete task actions
+* User profile or navigation area
+
+![Dashboard](screenshots/home.png)
+
+**Tips:**
+
+* Populate with realistic tasks before taking screenshots
+* Include both completed and pending tasks
+* Capture the full workspace layout
+* Avoid empty-state screenshots
+
+---
+
+## ✨ Features
+
+* User authentication with JWT
+* Google OAuth Sign-In
+* Create, update, and delete tasks
+* Protected routes
+* Persistent user sessions
+* Responsive user interface
+* Secure password hashing
+* RESTful API architecture
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+* React 19
+* React Router DOM
+* Axios
+* Vite
+* @react-oauth/google
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+
+### Authentication & Security
+
+* JWT Authentication
+* Google OAuth
+* bcrypt Password Hashing
+* Protected API Routes
+
+### Deployment
+
+* Vercel (Frontend)
+* Render / Railway (Backend)
+* MongoDB Atlas (Database)
+
+---
+
+## 🏗 Architecture
+
+```text
+React Frontend
+       │
+       ▼
+Express API
+       │
+       ▼
+MongoDB Atlas
+```
+
+---
+
+## 🔑 Key Technical Challenges Solved
+
+### Authentication System
+
+Implemented secure JWT-based authentication with support for both traditional email/password login and Google OAuth Sign-In.
 
 ### Route Protection
 
-- Protected routes require valid token in localStorage
-- Unauthenticated users are redirected to login
-- Token state is synced across browser tabs/windows
+Built protected client-side and server-side routes to ensure only authenticated users can access task management features.
 
-### User Models
+### OAuth Integration
 
-- **Traditional users**: Email, hashed password
-- **Google OAuth users**: Email, Google ID, optional profile picture
-- Users can link Google account to existing email-based account
+Integrated Google Sign-In using Google's OAuth APIs and verified tokens securely on the backend.
 
-## Troubleshooting
+### State Management
 
-### "Not allowed entry into home page after Google login"
+Maintained authentication state across page refreshes and route transitions for a seamless user experience.
 
-- **Fixed in v1.1**: Token state now properly updates across route changes
-- Ensure JWT_SECRET and GOOGLE_CLIENT_ID are set correctly in backend
+---
 
-### Google Login Button Not Appearing
+## 📡 API Endpoints
 
-- Verify Google Client ID is correctly configured
-- Check browser console for CORS or credential errors
+### Authentication
 
-### Database Connection Failed
+```http
+POST /auth/register
+POST /auth/login
+POST /auth/googleLogin
+```
 
-- Ensure MongoDB is running
-- Verify MONGO_URI in .env is correct
+### Tasks
 
-### Token Expired
+```http
+GET    /tasks
+POST   /tasks
+PUT    /tasks/:id
+DELETE /tasks/:id
+```
 
-- Tokens expire after 1 day
-- Users will be automatically logged out and redirected to login
+---
 
-## Development Notes
+## ⚙️ Local Setup
 
-- Frontend uses ESLint for code quality
-- Backend uses Nodemon for hot-reload during development
-- CORS is enabled for local development (frontend on different port)
+### Clone Repository
 
-## Future Enhancements
+```bash
+git clone https://github.com/yourusername/task-manager.git
+cd task-manager
+```
 
-- Task categories and tags
-- Due dates and reminders
-- Task sharing and collaboration
-- Dark mode support
-- Mobile app version
+### Backend Setup
 
-## License
+```bash
+cd server
+npm install
+npm run dev
+```
 
-ISC
+### Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🔧 Environment Variables
+
+### Backend (.env)
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+```
+
+### Frontend (.env)
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+---
+
+## 🚧 Future Improvements
+
+* Task categories and labels
+* Due dates and reminders
+* Task priority levels
+* Team collaboration
+* Dark mode
+* Drag-and-drop task organization
+* Mobile application support
+
+---
+
+## 👤 Author
+
+**Rhokeeb Sanni**
+
+GitHub: https://github.com/rhokeebsanni
