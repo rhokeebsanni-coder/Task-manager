@@ -40,6 +40,27 @@ const getTask = asyncWrapper(async (req, res) => {
   
 });
 
+const getTaskStats = asyncWrapper(async (req, res) => {
+  const tasks = await Task.find({
+    owner: req.user.userId,
+  });
+
+  const total = tasks.length;
+
+  const completed = tasks.filter((task) => task.completed).length;
+
+  const remaining = total - completed;
+
+  const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+  res.json({
+    total,
+    completed,
+    remaining,
+    progress,
+  });
+});
+
 // UPDATE TASK
 const updateTask = asyncWrapper(async (req, res) => {
 
@@ -49,11 +70,15 @@ const updateTask = asyncWrapper(async (req, res) => {
       throw new CustomError("Invalid task ID format",400);
     }
     
-    const updatedTask = await Task.findOneAndUpdate({_id: id,owner: req.user.userId}, req.body, {
-      returnDocument: "after",
-      runValidators: true,
-      context: "query",
-    });
+    const updatedTask = await Task.findOneAndUpdate(
+      { _id: id, owner: req.user.userId },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+        context: "query",
+      },
+    );
 
     if (!updatedTask) {
       throw new CustomError(`No task with id ${id}`, 404);
@@ -86,6 +111,7 @@ module.exports = {
   getAllTasks,
   createTask,
   getTask,
+  getTaskStats,
   updateTask,
   deleteTask,
 };
