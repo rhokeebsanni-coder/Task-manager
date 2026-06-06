@@ -13,12 +13,16 @@ const App = () => {
   const [token, setToken] = React.useState(localStorage.getItem("token"));
 
   React.useEffect(() => {
-    const handleStorageChange = () => {
+    const handleAuthChange = () => {
       setToken(localStorage.getItem("token"));
     };
 
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+    window.addEventListener("storage", handleAuthChange);
+    window.addEventListener("auth:changed", handleAuthChange);
+    return () => {
+      window.removeEventListener("storage", handleAuthChange);
+      window.removeEventListener("auth:changed", handleAuthChange);
+    };
   }, []);
 
   return (
@@ -35,11 +39,11 @@ const App = () => {
 
         <Route path="/register" element={<Register></Register>}></Route>
 
-        <Route path="/settings" element={<Settings />} />
         <Route
           element={token ? <Layout></Layout> : <Navigate to="/login" replace />}
         >
           <Route path="/home" element={<Home></Home>}></Route>
+          <Route path="/settings" element={<Settings />} />
 
           <Route path="*" element={<NotFound></NotFound>}></Route>
         </Route>

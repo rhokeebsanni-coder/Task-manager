@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import API from "../api/tasks";
 import { GoogleLogin } from "@react-oauth/google";
+
+import API from "../api/tasks";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -12,6 +13,12 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  const completeLogin = (token) => {
+    localStorage.setItem("token", token);
+    window.dispatchEvent(new Event("auth:changed"));
+    navigate("/home", { replace: true });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,9 +35,7 @@ const Register = () => {
         password,
         confirmPassword,
       });
-      const token = response.data.token;
-      localStorage.setItem("token", token);
-      navigate("/home", { replace: true });
+      completeLogin(response.data.token);
     } catch (error) {
       console.error(error);
       setError(error.response?.data?.msg || "Registration failed. Try again.");
@@ -47,8 +52,11 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="auth-input-group">
-            <label className="auth-label">Username</label>
+            <label className="auth-label" htmlFor="username">
+              Username
+            </label>
             <input
+              id="username"
               type="text"
               name="username"
               value={username}
@@ -60,8 +68,11 @@ const Register = () => {
           </div>
 
           <div className="auth-input-group">
-            <label className="auth-label">Email Address</label>
+            <label className="auth-label" htmlFor="email">
+              Email Address
+            </label>
             <input
+              id="email"
               type="email"
               name="email"
               value={email}
@@ -73,79 +84,47 @@ const Register = () => {
           </div>
 
           <div className="auth-input-group">
-            <label className="auth-label">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              placeholder="••••••••"
-              onChange={(e) => setPassword(e.target.value)}
-              className="auth-input"
-              required
-            />
-            <button
-              type="button"
-              className="auth-toggle-visibility"
-              onClick={() => {
-                setShowPassword((prev) => !prev);
-              }}
-            >
-              {showPassword ? (
-                /* Eye Slash Icon (Hide) */
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                  <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-                  <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                  <line x1="2" y1="2" x2="22" y2="22"></line>
-                </svg>
-              ) : (
-                /* Eye Icon (Show) */
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-              )}
-            </button>
+            <label className="auth-label" htmlFor="password">
+              Password
+            </label>
+            <div className="auth-password-wrapper">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                placeholder="********"
+                onChange={(e) => setPassword(e.target.value)}
+                className="auth-input auth-input-password"
+                required
+              />
+              <button
+                type="button"
+                className="auth-toggle-visibility"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           <div className="auth-input-group">
-            <label className="auth-label">Confirm Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="confirmPassword"
-              value={confirmPassword}
-              placeholder="••••••••"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="auth-input"
-              required
-            />
-            <button
-              type="button"
-              className="auth-toggle-visibility"
-              onClick={() => {
-                setShowPassword((prev) => !prev);
-              }}
-            ></button>
+            <label className="auth-label" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <div className="auth-password-wrapper">
+              <input
+                id="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={confirmPassword}
+                placeholder="********"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="auth-input auth-input-password"
+                required
+              />
+            </div>
           </div>
 
           <button type="submit" className="auth-button">
@@ -159,26 +138,19 @@ const Register = () => {
             Sign In
           </Link>
         </p>
+
         <div className="login-divider">
           <span>or</span>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-            marginTop: "1rem",
-          }}
-        >
+
+        <div className="google-btn-wrapper">
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
               try {
                 const response = await API.post("/auth/googleLogin", {
                   credential: credentialResponse.credential,
                 });
-                const token = response.data.token;
-                localStorage.setItem("token", token);
-                navigate("/home", { replace: true });
+                completeLogin(response.data.token);
               } catch (error) {
                 setError(
                   error.response?.data?.msg ||
@@ -190,12 +162,10 @@ const Register = () => {
               setError("Google login failed.");
             }}
             theme="outline"
-            shape="pill" // ⚡ Makes the button fully rounded
-            size="large" // ⚡ Makes the button larger vertically
-            width="320px" // ⚡ Sets a concrete, larger width (match this to your main button width)
-          >
-            Sign in with Google
-          </GoogleLogin>
+            shape="pill"
+            size="large"
+            width="320px"
+          />
         </div>
       </div>
     </div>

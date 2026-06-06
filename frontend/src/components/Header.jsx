@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -6,7 +5,7 @@ const Header = () => {
     <header className="site-header">
       {/* Brand */}
       <div className="header-brand">
-        <div className="header-brand-icon">☕</div>
+        <div className="header-brand-icon">DB</div>
         <p className="header-brand-name">
           Daily <span>Brew</span>
         </p>

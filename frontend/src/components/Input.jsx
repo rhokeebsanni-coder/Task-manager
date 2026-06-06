@@ -2,7 +2,7 @@ import React from "react";
 import placeHolders from "../data/placeHolders";
 import API from "../api/tasks";
 
-const Input = (props) => {
+const Input = React.forwardRef(({ setTasks, setLoading, setMessage }, taskRef) => {
   const [hint, setHint] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const [priority, setPriority] = React.useState("mid");
@@ -16,25 +16,25 @@ const Input = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const value = props.taskRef.current.value.trim();
+    const value = taskRef.current.value.trim();
     if (!value) return setHint(true);
 
     setHint(false);
     try {
-      props.setLoading(true);
+      setLoading(true);
       const response = await API.post("/tasks", { task: value, priority });
-      props.setTasks((prev) => [response.data, ...prev]);
-      props.setMessage({ msg: "Task added successfully", success: true });
+      setTasks((prev) => [response.data, ...prev]);
+      setMessage({ msg: "Task added successfully", success: true });
       setPriority("mid"); // reset after submit
     } catch (error) {
-      props.setMessage({
+      setMessage({
         msg: error.response?.data?.msg || "Something went wrong",
         success: false,
       });
     } finally {
-      props.setLoading(false);
-      setTimeout(() => props.setMessage(null), 2000);
-      props.taskRef.current.value = "";
+      setLoading(false);
+      setTimeout(() => setMessage(null), 2000);
+      taskRef.current.value = "";
     }
   };
 
@@ -44,7 +44,7 @@ const Input = (props) => {
         <div className={hint ? "input-wrapper error" : "input-wrapper"}>
           <input
             className="main-input"
-            ref={props.taskRef}
+            ref={taskRef}
             placeholder={placeHolders[index]}
             onChange={() => hint && setHint(false)}
           />
@@ -54,9 +54,9 @@ const Input = (props) => {
             onChange={(e) => setPriority(e.target.value)}
             title="Set priority"
           >
-            <option value="low">🟢 Low</option>
-            <option value="mid">🟡 Mid</option>
-            <option value="high">🔴 High</option>
+            <option value="low">Low</option>
+            <option value="mid">Mid</option>
+            <option value="high">High</option>
           </select>
           <button className="add-btn" type="submit">
             Add
@@ -66,6 +66,8 @@ const Input = (props) => {
       </form>
     </div>
   );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;

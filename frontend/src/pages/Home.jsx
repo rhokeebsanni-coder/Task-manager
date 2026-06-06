@@ -1,11 +1,10 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 import Input from "../components/Input";
 import Task from "../components/Task";
 import API from "../api/tasks";
 import HomepageSkeleton from "../components/HomepageSkeleton";
 
-/* ── Streak helpers ───────────────────────────────────────── */
+/* Streak helpers */
 function getStreak() {
   return JSON.parse(
     localStorage.getItem("db_streak") || '{"count":0,"lastDate":null}',
@@ -52,12 +51,9 @@ const Home = () => {
   const [message, setMessage] = React.useState(null);
   const [filter, setFilter] = React.useState("all");
   const [search, setSearch] = React.useState("");
+  const [editValue, setEditValue] = React.useState("");
   const [editPriority, setEditPriority] = React.useState("mid");
-  const [streak, setStreak] = React.useState(5);
-  const [token] = React.useState(localStorage.getItem("token"));
-
-  if (!token) return <Navigate to="/login" replace />;
-
+  const [streak, setStreak] = React.useState(getStreakFromStorage());
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,7 +74,7 @@ const Home = () => {
     fetchData();
   }, []);
 
-  /* ── stats ── */
+  /* stats */
   const totalTasks = task.length;
   const completedCount = task.filter((t) => t.completed).length;
   const remainingCount = totalTasks - completedCount;
@@ -91,7 +87,7 @@ const Home = () => {
     month: "long",
   });
 
-  /* ── filter + search + split ── */
+  /* filter + search + split */
   const afterFilter =
     filter === "all"
       ? task
@@ -120,11 +116,12 @@ const Home = () => {
       setShowDelete={setShowDelete}
       setShowEdit={setShowEdit}
       setId={setDelId}
+      setEditValue={setEditValue}
       setEditPriority={setEditPriority}
     />
   );
 
-  /* ── actions ── */
+  /* actions */
   async function deleteTask(id) {
     try {
       setLoading(true);
@@ -145,10 +142,14 @@ const Home = () => {
 
   async function editTask(e, id) {
     e.preventDefault();
+    const value = editValue.trim();
+    if (!value) {
+      setHint(true);
+      return;
+    }
+
     try {
-      const value = editRef.current.value.trim();
       setLoading(true);
-      if (!value) return setHint(true);
       const response = await API.patch(`/tasks/${id}`, {
         task: value,
         priority: editPriority,
@@ -174,6 +175,7 @@ const Home = () => {
       setTimeout(() => setMessage(null), 2000);
       setHint(false);
       setShowEdit(false);
+      setEditValue("");
       setLoading(false);
     }
   }
@@ -206,17 +208,17 @@ const Home = () => {
   return (
     <div className="app-wrapper">
       <div className="main-card">
-        {/* ── Dashboard ── */}
+        {/* Dashboard */}
         <div className="dashboard-card">
           <div className="dashboard-header">
             <div className="dashboard-title-row">
               <div>
-                <h1>What we cooking? ☕</h1>
+                <h1>What are we cooking?</h1>
                 <p className="today-label">{todayLabel}</p>
               </div>
               {streak > 0 && (
                 <div className="streak-badge">
-                  <span className="streak-fire">🔥</span>
+                  <span className="streak-fire">Streak</span>
                   <span className="streak-count">{streak}</span>
                   <span className="streak-label">
                     day{streak !== 1 ? "s" : ""}
@@ -255,17 +257,17 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ── Input + search + filters ── */}
+        {/* Input + search + filters */}
         <div className="input-outer">
           <Input
-            taskRef={inputRef}
+            ref={inputRef}
             setTasks={setTask}
             setLoading={setLoading}
             setMessage={setMessage}
           />
 
           <div className="search-wrapper">
-            <span className="search-icon">🔍</span>
+            <span className="search-icon">Search</span>
             <input
               className="search-input"
               placeholder="Search tasks..."
@@ -274,7 +276,7 @@ const Home = () => {
             />
             {search && (
               <button className="search-clear" onClick={() => setSearch("")}>
-                ✕
+                Clear
               </button>
             )}
           </div>
@@ -292,11 +294,11 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ── Task lists ── */}
+        {/* Task lists */}
         <div className="sections-container">
           {task.length === 0 && (
             <div className="empty-state">
-              <div className="empty-state-icon">☕</div>
+              <div className="empty-state-icon">DB</div>
               <h3>Nothing brewing yet</h3>
               <p>Add your first task to get started.</p>
             </div>
@@ -304,7 +306,7 @@ const Home = () => {
 
           {search && afterSearch.length === 0 && task.length > 0 && (
             <div className="empty-state">
-              <div className="empty-state-icon">🔍</div>
+              <div className="empty-state-icon">Search</div>
               <h3>No results for "{search}"</h3>
               <p>Try a different keyword.</p>
             </div>
@@ -326,7 +328,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* ── Delete modal ── */}
+      {/* Delete modal */}
       {showDelete && (
         <div className="modal-overlay" onClick={() => setShowDelete(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -347,7 +349,7 @@ const Home = () => {
         </div>
       )}
 
-      {/* ── Edit modal ── */}
+      {/* Edit modal */}
       {showEdit && (
         <div className="modal-overlay" onClick={() => setShowEdit(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -358,6 +360,11 @@ const Home = () => {
                 className="modal-input"
                 autoFocus
                 placeholder="Edit task..."
+                value={editValue}
+                onChange={(e) => {
+                  setEditValue(e.target.value);
+                  if (hint) setHint(false);
+                }}
               />
               <select
                 className="priority-select"
@@ -373,9 +380,9 @@ const Home = () => {
                   fontFamily: "inherit",
                 }}
               >
-                <option value="low">🟢 Low</option>
-                <option value="mid">🟡 Mid</option>
-                <option value="high">🔴 High</option>
+                <option value="low">Low</option>
+                <option value="mid">Mid</option>
+                <option value="high">High</option>
               </select>
               {hint && (
                 <p
@@ -416,7 +423,7 @@ const Home = () => {
           className={`toast-notification${message.success ? "" : " msg-error"}`}
         >
           <div className="toast-content">
-            <span className="toast-icon">☕</span>
+            <span className="toast-icon">DB</span>
             <p className="toast-message">{message.msg}</p>
           </div>
           <button className="toast-close" onClick={() => setMessage(null)}>

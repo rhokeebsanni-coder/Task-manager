@@ -1,8 +1,8 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-/* ── Toggle component ── */
+/* Toggle component */
 const SettingToggle = ({ label, description, value, onChange }) => (
   <div className="settings-toggle-row">
     <div>
@@ -18,7 +18,7 @@ const SettingToggle = ({ label, description, value, onChange }) => (
   </div>
 );
 
-/* ── Settings page ── */
+/* Settings page */
 const Settings = () => {
   const navigate = useNavigate();
 
@@ -35,6 +35,7 @@ const Settings = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    window.dispatchEvent(new Event("auth:changed"));
     navigate("/login");
   };
 
@@ -48,7 +49,7 @@ const Settings = () => {
         {/* Header */}
         <div className="settings-header">
           <button className="settings-back-btn" onClick={() => navigate(-1)} title="Go back">
-            ←
+            Back
           </button>
           <h1 className="settings-title">Settings</h1>
         </div>
@@ -104,7 +105,7 @@ const Settings = () => {
           <div className="settings-logout-section">
             {!showConfirm ? (
               <button className="settings-logout-btn" onClick={() => setShowConfirm(true)}>
-                🚪 Logout
+                Logout
               </button>
             ) : (
               <div className="settings-confirm-box">
@@ -120,7 +121,7 @@ const Settings = () => {
 
         {/* Footer */}
         <div className="settings-info-footer">
-          💡 Your settings are automatically saved
+          Your settings are automatically saved
         </div>
 
       </div>

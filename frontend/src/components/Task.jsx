@@ -1,6 +1,4 @@
-import React from "react";
-
-const PRIORITY_LABELS = { high: "🔴 High", mid: "🟡 Mid", low: "🟢 Low" };
+const PRIORITY_LABELS = { high: "High", mid: "Mid", low: "Low" };
 
 function formatDate(dateStr) {
   if (!dateStr) return "";
@@ -14,7 +12,7 @@ function formatDate(dateStr) {
 
   if (isToday) {
     return (
-      "Today · " +
+      "Today - " +
       date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
     );
   }
@@ -36,6 +34,7 @@ const Task = ({
   setShowDelete,
   setShowEdit,
   setId,
+  setEditValue,
   setEditPriority,
 }) => {
   const handleDelete = () => {
@@ -45,6 +44,7 @@ const Task = ({
 
   const handleEdit = () => {
     setId(id);
+    setEditValue(value);
     setEditPriority(priority);
     setShowEdit(true);
   };
@@ -84,7 +84,7 @@ const Task = ({
           aria-label="Edit task"
           title="Edit"
         >
-          ✏️
+          Edit
         </button>
         <button
           className="action-btn delete"
@@ -92,7 +92,7 @@ const Task = ({
           aria-label="Delete task"
           title="Delete"
         >
-          🗑️
+          Delete
         </button>
       </div>
     </div>

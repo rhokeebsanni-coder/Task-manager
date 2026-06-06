@@ -1,9 +1,21 @@
-//(err,req,res,next) this is expresses middleware for errs so it directs all errors here
+const errorHandlerMiddleware = (err, req, res, next) => {
+  let statusCode = err.statusCode || 500;
+  let message = err.message || "Something went wrong. Please try again.";
 
-const errorHandlerMiddleware = (err,req,res,next) => {
-  const statusCode = err.statusCode || 500
-  return res.status(statusCode).json({ msg: err.message || 'Something went wrong .please try again' });
-  
-}
+  if (err.name === "ValidationError") {
+    statusCode = 400;
+    message = Object.values(err.errors)
+      .map((error) => error.message)
+      .join(", ");
+  }
 
-module.exports = errorHandlerMiddleware
+  if (err.code === 11000) {
+    statusCode = 400;
+    const field = Object.keys(err.keyValue || {})[0] || "field";
+    message = `${field} already exists`;
+  }
+
+  return res.status(statusCode).json({ msg: message });
+};
+
+module.exports = errorHandlerMiddleware;

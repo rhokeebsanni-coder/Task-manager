@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
 });
 
 API.interceptors.request.use((config) => {
@@ -17,6 +17,7 @@ API.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
+      window.dispatchEvent(new Event('auth:changed'))
       if (!window.location.pathname.match(/^\/(login|register|welcome)$/)) {
         window.location.href = '/login'
       }

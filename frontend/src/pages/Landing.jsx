@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
   // State for an interactive preview switcher to showcase development skills
   const [activeFeature, setActiveFeature] = React.useState("focus");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const featureData = {
     focus: {
@@ -33,7 +33,7 @@ const LandingPage = () => {
       {/* Navigation Header */}
       <nav className="landing-nav">
         <div className="logo-section">
-          <span className="logo-icon">☕</span>
+          <span className="logo-icon">DB</span>
           <span className="logo-text">Daily Brew</span>
         </div>
         <div className="nav-actions">
@@ -59,7 +59,7 @@ const LandingPage = () => {
       {/* Hero Section */}
       <main className="hero-section">
         <div className="hero-content">
-          <div className="tagline-badge">✨ Redefining Productivity</div>
+          <div className="tagline-badge">Redefining Productivity</div>
           <h1 className="hero-title">
             Capture your thoughts, <br />
             <span className="text-highlight">one task at a time.</span>
@@ -69,11 +69,17 @@ const LandingPage = () => {
             creatives, and builders who turn ideas into reality daily.
           </p>
           <div className="cta-group">
-            <button className="btn-primary btn-large">
+            <button
+              className="btn-primary btn-large"
+              onClick={() => navigate("/register")}
+            >
               Launch Application
             </button>
-            <button className="btn-secondary btn-large">
-              View Documentation
+            <button
+              className="btn-secondary btn-large"
+              onClick={() => navigate("/login")}
+            >
+              Sign In
             </button>
           </div>
         </div>
@@ -92,7 +98,7 @@ const LandingPage = () => {
 
             <div className="mock-task-list">
               <div className="mock-item completed">
-                <div className="check-circle checked">✓</div>
+                <div className="check-circle checked"></div>
                 <div className="mock-text">
                   Refactor database authentication validation schema
                 </div>

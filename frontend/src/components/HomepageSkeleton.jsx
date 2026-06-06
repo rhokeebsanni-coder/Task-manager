@@ -1,5 +1,3 @@
-import React from "react";
-
 const HomepageSkeleton = () => {
   // Create an array of 3 placeholders to match your task rows
   const skeletonTasks = [1, 2, 3];
